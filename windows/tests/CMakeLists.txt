@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.24)
+project(caelestia-input-tests LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
+enable_testing()
+add_executable(input-policy-test input-policy-test.cpp)
+add_test(NAME input-policy COMMAND input-policy-test)
