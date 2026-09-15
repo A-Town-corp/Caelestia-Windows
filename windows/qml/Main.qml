@@ -13,11 +13,11 @@ Item {
     property bool exclusionTest: false
     property bool exclusionsEnabled: true
     readonly property real borderThickness: Config.border.thickness
-    readonly property real barWidth: 60
+    readonly property real barHeight: 60
     readonly property real drawerWidth: 854
     readonly property real drawerHeight: 340
     readonly property real progress: 1 - dashboard.offsetScale
-    readonly property real drawerX: barWidth + (width - barWidth - borderThickness - drawerWidth) / 2
+    readonly property real drawerX: (width - drawerWidth) / 2
 
     // Diagnostic palette only. Reference scheme/fonts remain a separate visual gate.
     readonly property color surface: "#181820"
@@ -43,10 +43,10 @@ Item {
             anchors.margins: -50
             group: blobGroup
             radius: root.Config.border.rounding
-            borderLeft: root.barWidth + 50
+            borderLeft: root.borderThickness + 50
             borderRight: root.borderThickness + 50
             borderTop: root.borderThickness + 50
-            borderBottom: root.borderThickness + 50
+            borderBottom: root.barHeight + 50
         }
         BlobRect {
             id: dashboardBackground
@@ -124,7 +124,8 @@ Item {
         }
     }
     Text {
-        x: 16; y: 24
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: root.height - root.barHeight / 2 - height / 2
         text: "TEST"
         color: root.accent
         font.family: "Segoe UI"; font.pixelSize: 10

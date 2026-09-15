@@ -8,13 +8,13 @@ namespace caelestia::windows {
 struct InputPolicy {
     double width;
     double height;
-    double barWidth;
+    double barHeight;
     double border;
     double drawerWidth;
     double drawerHeight;
 
     [[nodiscard]] double drawerLeft() const {
-        return barWidth + (width - barWidth - border - drawerWidth) / 2;
+        return (width - drawerWidth) / 2;
     }
 
     [[nodiscard]] bool inScreen(double x, double y) const {
@@ -32,8 +32,8 @@ struct InputPolicy {
     }
 
     [[nodiscard]] bool intercepts(double x, double y, double progress) const {
-        return inScreen(x, y) && (x < barWidth || x >= width - border || y < border
-            || y >= height - border || keepOpen(x, y, progress));
+        return inScreen(x, y) && (x < border || x >= width - border || y < border
+            || y >= height - barHeight || keepOpen(x, y, progress));
     }
 };
 

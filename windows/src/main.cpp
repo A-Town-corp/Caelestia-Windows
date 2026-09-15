@@ -135,7 +135,7 @@ int main(int argc, char** argv) {
     QObject::connect(&input, &QTimer::timeout, &app, [&] {
         const QPoint point = view.mapFromGlobal(QCursor::pos());
         const InputPolicy policy{double(view.width()), double(view.height()),
-            root->property("barWidth").toDouble(), root->property("borderThickness").toDouble(),
+            root->property("barHeight").toDouble(), root->property("borderThickness").toDouble(),
             root->property("drawerWidth").toDouble(), root->property("drawerHeight").toDouble()};
         const double progress = root->property("progress").toDouble();
         const bool escape = (GetAsyncKeyState(VK_ESCAPE) & 0x8000) != 0;
@@ -155,8 +155,8 @@ int main(int argc, char** argv) {
         if (tightMask || paddedMask) {
             const int padding = paddedMask ? 20 : 0;
             QRegion region(0, 0, view.width(), view.height());
-            region -= QRegion(int(policy.barWidth), int(policy.border),
-                view.width() - int(policy.barWidth + policy.border), view.height() - int(2 * policy.border));
+            region -= QRegion(int(policy.border), int(policy.border),
+                view.width() - int(2 * policy.border), view.height() - int(policy.border + policy.barHeight));
             region += QRegion(int(policy.drawerLeft()) - padding, 0,
                 int(policy.drawerWidth) + 2 * padding, int(policy.border + policy.drawerHeight * std::clamp(progress, 0.0, 1.0)) + padding);
             view.setMask(region);

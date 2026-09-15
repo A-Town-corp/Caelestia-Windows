@@ -15,6 +15,12 @@ DLLs and QML directories. No startup task is installed.
 - Click **Close test**, or press **Ctrl+Alt+Q**, to exit.
 - Normal Windows window positioning and the native taskbar stay in use.
 
+Layout: 60 logical-pixel diagnostic strip at the bottom; left/right/top borders
+use Config.border.thickness (default 10). The dashboard is centred at the top.
+The strip sits above the native Windows taskbar inside the available work area.
+Future taskbar-attached menus, volume and power controls must open upward from
+horizontal anchors with matching blob deformation and input regions.
+
 Default: D3D11, primary monitor's available work area, 8 ms cursor polling.
 Avoid launching multiple copies. A second overlay cannot register the exit key.
 
@@ -38,7 +44,7 @@ root. Logs are replaced when their corresponding mode starts. Smoke exit codes:
 - CMake 4.4.2; Visual Studio Build Tools 18, MSVC 14.51.36231 (compiler
   19.51.36252); Windows SDK 10.0.26100.0; Qt 6.11.2; Vulkan SDK 1.4.357.0.
 - `ctest --test-dir build/input-tests -C Release --output-on-failure`: 1/1 passed;
-  executable prints `PASS: 16 input-policy checks`.
+  executable prints `PASS: 23 input-policy checks`.
 - `windows/tests/scene-smoke.ps1`: QML load, animated open/close, rendered frame and
   clean exit passed without runtime warnings on D3D11.
 - Shader gap control: excluded alpha 27; non-excluded alpha 255 at (305,550).
