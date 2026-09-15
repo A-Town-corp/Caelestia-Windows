@@ -8,7 +8,7 @@
 
 namespace caelestia::settings {
 
-class ObjectNode : public Node {
+class CAELESTIA_SETTINGS_EXPORT ObjectNode : public Node {
     Q_OBJECT
 
 public:

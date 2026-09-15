@@ -33,6 +33,11 @@ function(qml_module arg_TARGET)
     list(GET uri_parts 0 top_level)
     set(backing_lib_dir "${INSTALL_QMLDIR}/${top_level}/lib")
     set(module_dir "${INSTALL_QMLDIR}/${module_target_path}")
+    if(WIN32)
+        # Windows has no RPATH; backing DLLs share the host executable directory.
+        set(backing_lib_dir "bin")
+        set_target_properties(${arg_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+    endif()
 
     install(TARGETS ${arg_TARGET}
         LIBRARY DESTINATION "${backing_lib_dir}"
@@ -51,11 +56,18 @@ function(qml_module arg_TARGET)
     if(arg_INCLUDE_PREFIX)
         set(include_dir "${CMAKE_CURRENT_BINARY_DIR}/include")
         file(MAKE_DIRECTORY "${include_dir}")
-        file(CREATE_LINK "${CMAKE_CURRENT_SOURCE_DIR}" "${include_dir}/${arg_INCLUDE_PREFIX}" SYMBOLIC)
+        if(WIN32)
+            # COPY_ON_ERROR on a directory leaves it empty with CMP0205 OLD.
+            file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/" DESTINATION "${include_dir}/${arg_INCLUDE_PREFIX}")
+        else()
+            file(CREATE_LINK "${CMAKE_CURRENT_SOURCE_DIR}" "${include_dir}/${arg_INCLUDE_PREFIX}" SYMBOLIC COPY_ON_ERROR)
+        endif()
         target_include_directories(${arg_TARGET} PUBLIC "${include_dir}")
     endif()
 
     # Add backing target dir to plugin rpath so it can find its backing target
-    file(RELATIVE_PATH plugin_to_lib "/${module_target_path}" "/${top_level}/lib")
-    set_property(TARGET ${module_plugin_target} APPEND PROPERTY INSTALL_RPATH "$ORIGIN/${plugin_to_lib}")
+    if(NOT WIN32)
+        file(RELATIVE_PATH plugin_to_lib "/${module_target_path}" "/${top_level}/lib")
+        set_property(TARGET ${module_plugin_target} APPEND PROPERTY INSTALL_RPATH "$ORIGIN/${plugin_to_lib}")
+    endif()
 endfunction()

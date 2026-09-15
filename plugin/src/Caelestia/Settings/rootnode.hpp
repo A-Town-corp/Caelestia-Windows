@@ -6,7 +6,7 @@
 
 namespace caelestia::settings {
 
-class RootNode : public ObjectNode {
+class CAELESTIA_SETTINGS_EXPORT RootNode : public ObjectNode {
     Q_OBJECT
 
     Q_PROPERTY(QList<caelestia::settings::Diagnostic> diagnostics READ diagnostics NOTIFY diagnosticsChanged)

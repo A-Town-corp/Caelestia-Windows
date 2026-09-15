@@ -2,6 +2,7 @@
 
 #include <qjsonvalue.h>
 #include <qobject.h>
+#include "caelestia-settings_export.h"
 
 #include "changebatcher.hpp"
 #include "common.hpp"
@@ -10,7 +11,7 @@
 
 namespace caelestia::settings {
 
-class Node : public QObject {
+class CAELESTIA_SETTINGS_EXPORT Node : public QObject {
     Q_OBJECT
 
 public:

@@ -15,3 +15,7 @@ qml_module(caelestia-settings
     LIBRARIES
         caelestia-util
 )
+
+include(GenerateExportHeader)
+generate_export_header(caelestia-settings)
+target_include_directories(caelestia-settings PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")

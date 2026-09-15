@@ -4,7 +4,7 @@
 
 namespace caelestia::settings {
 
-class ListNode : public Node {
+class CAELESTIA_SETTINGS_EXPORT ListNode : public Node {
     Q_OBJECT
     QML_ANONYMOUS
 

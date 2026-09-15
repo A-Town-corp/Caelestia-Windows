@@ -47,13 +47,17 @@ add_compile_definitions(
     QT_NO_CAST_FROM_BYTEARRAY
 )
 
-add_compile_options(
-    -Wall -Wextra -Wpedantic -Wshadow -Wconversion
-    -Wold-style-cast -Wnull-dereference -Wdouble-promotion
-    -Wformat=2 -Wfloat-equal -Woverloaded-virtual
-    -Wsign-conversion -Wredundant-decls -Wswitch
-    -Wunreachable-code
-)
+if(MSVC)
+    add_compile_options(/W4 /permissive- /Zc:preprocessor)
+else()
+    add_compile_options(
+        -Wall -Wextra -Wpedantic -Wshadow -Wconversion
+        -Wold-style-cast -Wnull-dereference -Wdouble-promotion
+        -Wformat=2 -Wfloat-equal -Woverloaded-virtual
+        -Wsign-conversion -Wredundant-decls -Wswitch
+        -Wunreachable-code
+    )
+endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wunused-lambda-capture -Wno-nonportable-include-path)
@@ -65,6 +69,10 @@ endif()
 
 if("plugin" IN_LIST ENABLE_MODULES)
     add_subdirectory(plugin)
+endif()
+
+if("windows" IN_LIST ENABLE_MODULES)
+    add_subdirectory(windows)
 endif()
 
 if("shell" IN_LIST ENABLE_MODULES)

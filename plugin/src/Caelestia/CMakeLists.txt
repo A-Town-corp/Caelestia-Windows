@@ -1,9 +1,16 @@
+set(core_platform_sources)
+set(core_platform_libraries)
+if(NOT CAELESTIA_WINDOWS_PROTOTYPE)
+    list(APPEND core_platform_sources qalculator.cpp)
+    list(APPEND core_platform_libraries PkgConfig::Qalculate)
+endif()
+
 qml_module(caelestia-core
     URI Caelestia
     INCLUDE_PREFIX core
     SOURCES
         cutils.cpp
-        qalculator.cpp
+        ${core_platform_sources}
         requests.cpp
         toaster.cpp
         circularbuffer.cpp
@@ -11,7 +18,7 @@ qml_module(caelestia-core
         Qt::Gui
         Qt::Quick
         Qt::Concurrent
-        PkgConfig::Qalculate
+        ${core_platform_libraries}
         caelestia-util
 )
 
@@ -25,10 +32,12 @@ list(APPEND CMAKE_AUTOMOC_MACRO_NAMES
 )
 
 add_subdirectory(Settings)
-add_subdirectory(Components)
 add_subdirectory(Config)
-add_subdirectory(Models)
-add_subdirectory(Services)
 add_subdirectory(Blobs)
-add_subdirectory(Images)
-add_subdirectory(I18n)
+if(NOT CAELESTIA_WINDOWS_PROTOTYPE)
+    add_subdirectory(Components)
+    add_subdirectory(Models)
+    add_subdirectory(Services)
+    add_subdirectory(Images)
+    add_subdirectory(I18n)
+endif()
