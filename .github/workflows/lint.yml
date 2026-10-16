@@ -1,5 +1,8 @@
 name: Lint code
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
